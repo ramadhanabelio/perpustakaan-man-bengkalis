@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\BorrowController;
 use App\Http\Controllers\BorrowingController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -23,11 +25,28 @@ Route::middleware('auth')->group(function () {
     Route::post('/borrow', [BorrowController::class, 'store'])->name('borrow.store');
     Route::get('/my-borrowings', [BorrowController::class, 'myBorrowings'])->name('borrow.my');
     Route::post('/borrowings/{id}/request-return', [BorrowController::class, 'requestReturn'])->name('borrow.requestReturn');
+    Route::post(
+        '/borrowings/{id}/request-extend',
+        [BorrowController::class, 'requestExtend']
+    )
+        ->name('borrow.requestExtend');
+
+    Route::post(
+        '/borrowings/{id}/approve-extend',
+        [BorrowingController::class, 'approveExtend']
+    )
+        ->name('borrowings.approveExtend');
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth')->name('dashboard');
 
+    Route::get('/profile', [ProfileController::class, 'edit'])
+        ->name('profile.edit');
+    Route::put('/profile', [ProfileController::class, 'update'])
+        ->name('profile.update');
+
     Route::resource('books', BookController::class);
     Route::resource('members', MemberController::class);
+    Route::resource('admins', AdminController::class);
     Route::post('/borrowings/{id}/approve', [BorrowingController::class, 'approve'])->name('borrowings.approve');
     Route::post('/borrowings/{id}/return', [BorrowingController::class, 'returnBook'])->name('borrowings.return');
     Route::post('/borrowings/{id}/reject-return', [BorrowingController::class, 'rejectReturn'])->name('borrowings.rejectReturn');

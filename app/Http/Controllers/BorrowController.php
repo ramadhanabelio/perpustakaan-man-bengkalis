@@ -74,4 +74,21 @@ class BorrowController extends Controller
 
         return back()->with('success', 'Pengajuan pengembalian dikirim');
     }
+
+    public function requestExtend($id)
+    {
+        $borrowing = Borrowing::where('id', $id)
+            ->where('member_id', auth()->user()->member->id)
+            ->firstOrFail();
+
+        if (!in_array($borrowing->status, ['approved', 'late'])) {
+            return back()->with('error', 'Perpanjangan tidak dapat diajukan');
+        }
+
+        $borrowing->update([
+            'status' => 'extend_requested'
+        ]);
+
+        return back()->with('success', 'Pengajuan perpanjangan berhasil dikirim');
+    }
 }

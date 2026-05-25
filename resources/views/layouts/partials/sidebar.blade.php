@@ -55,6 +55,13 @@
                                 <p>Kelola Peminjaman</p>
                             </a>
                         </li>
+
+                        <li class="nav-item {{ request()->is('admins*') ? 'active' : '' }}">
+                            <a href="{{ route('admins.index') }}">
+                                <i class="fas fa-user-shield"></i>
+                                <p>Kelola Admin</p>
+                            </a>
+                        </li>
                     @endif
                 @endauth
 

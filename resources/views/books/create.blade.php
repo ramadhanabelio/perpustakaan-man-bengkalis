@@ -35,7 +35,7 @@
                         <div class="card-title">Tambah Buku</div>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('books.store') }}" method="POST">
+                        <form action="{{ route('books.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
 
                             <div class="form-group">
@@ -61,6 +61,16 @@
                             <div class="form-group">
                                 <label>Deskripsi</label>
                                 <textarea name="description" class="form-control"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Kategori</label>
+                                <input type="text" name="category" class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Cover Buku</label>
+                                <input type="file" name="cover_image" class="form-control">
                             </div>
 
                             <div class="form-group">

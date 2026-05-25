@@ -3,6 +3,21 @@
 @section('title', 'Monitoring Peminjaman')
 
 @section('content')
+    <style>
+        .table-fixed {
+            max-height: 650px;
+            overflow-y: auto;
+        }
+
+        .table-fixed thead th {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: white;
+            border-bottom: 2px solid #dee2e6;
+        }
+    </style>
+
     <div class="page-inner">
 
         <div class="page-header">
@@ -35,11 +50,11 @@
                     <div class="alert alert-success">{{ session('success') }}</div>
                 @endif
 
-                <div class="table-responsive">
-                    <table class="table table-striped table-hover">
+                <div class="table-responsive table-fixed">
+                    <table id="basic-datatables" class="display table table-striped table-hover">
                         <thead>
                             <tr>
-                                <th>No</th>
+                                <th>No.</th>
                                 <th>Member</th>
                                 <th>Buku</th>
                                 <th>Tgl Pinjam</th>
@@ -51,7 +66,7 @@
                         <tbody>
                             @foreach ($borrowings as $i => $b)
                                 <tr>
-                                    <td>{{ $i + 1 }}</td>
+                                    <td>{{ $i + 1 }}.</td>
                                     <td>{{ $b->member->user->name }}</td>
                                     <td>{{ $b->book->title }}</td>
                                     <td>{{ $b->borrow_date }}</td>
@@ -107,6 +122,18 @@
                                                     method="POST">
                                                     @csrf
                                                     <button class="btn btn-danger btn-sm">Tolak Return</button>
+                                                </form>
+                                            @endif
+
+                                            @if ($b->status == 'extend_requested')
+                                                <form action="{{ route('borrowings.approveExtend', $b->id) }}"
+                                                    method="POST" style="display:inline;">
+
+                                                    @csrf
+
+                                                    <button class="btn btn-warning btn-sm">
+                                                        Setujui Perpanjangan
+                                                    </button>
                                                 </form>
                                             @endif
 

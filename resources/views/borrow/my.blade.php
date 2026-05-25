@@ -46,21 +46,44 @@
                                     </td>
                                     <td>
 
-                                        {{-- AJUKAN RETURN --}}
+                                        {{-- APPROVED / LATE --}}
                                         @if (in_array($b->status, ['approved', 'late']))
-                                            <form action="{{ route('borrow.requestReturn', $b->id) }}" method="POST"
-                                                style="display:inline;">
-                                                @csrf
-                                                <button class="btn btn-sm btn-danger">
-                                                    <i class="fas fa-undo"></i>
-                                                    Ajukan Pengembalian
-                                                </button>
-                                            </form>
+                                            <div class="d-flex gap-2 flex-wrap">
 
-                                            {{-- MENUNGGU --}}
+                                                {{-- AJUKAN PENGEMBALIAN --}}
+                                                <form action="{{ route('borrow.requestReturn', $b->id) }}" method="POST">
+
+                                                    @csrf
+
+                                                    <button class="btn btn-sm btn-danger">
+                                                        <i class="fas fa-undo"></i>
+                                                        Pengembalian
+                                                    </button>
+                                                </form>
+
+                                                {{-- AJUKAN PERPANJANGAN --}}
+                                                <form action="{{ route('borrow.requestExtend', $b->id) }}" method="POST">
+
+                                                    @csrf
+
+                                                    <button class="btn btn-sm btn-warning">
+                                                        <i class="fas fa-calendar-plus"></i>
+                                                        Perpanjang
+                                                    </button>
+                                                </form>
+
+                                            </div>
+
+                                            {{-- MENUNGGU RETURN --}}
                                         @elseif($b->status == 'return_requested')
                                             <span class="badge bg-info">
-                                                Menunggu Persetujuan
+                                                Menunggu Persetujuan Pengembalian
+                                            </span>
+
+                                            {{-- MENUNGGU EXTEND --}}
+                                        @elseif($b->status == 'extend_requested')
+                                            <span class="badge bg-warning">
+                                                Menunggu Persetujuan Perpanjangan
                                             </span>
                                         @else
                                             <span class="text-muted">-</span>

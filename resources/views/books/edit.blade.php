@@ -35,7 +35,7 @@
                         <div class="card-title">Edit Buku</div>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('books.update', $book->id) }}" method="POST">
+                        <form action="{{ route('books.update', $book->id) }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
 
@@ -66,6 +66,24 @@
                             <div class="form-group">
                                 <label>Deskripsi</label>
                                 <textarea name="description" class="form-control">{{ $book->description }}</textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Kategori</label>
+                                <input type="text" name="category" value="{{ $book->category }}" class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Cover Buku</label>
+
+                                @if ($book->cover_image)
+                                    <div class="mb-2">
+                                        <img src="{{ asset('storage/' . $book->cover_image) }}" width="120"
+                                            class="img-thumbnail">
+                                    </div>
+                                @endif
+
+                                <input type="file" name="cover_image" class="form-control">
                             </div>
 
                             <div class="form-group">

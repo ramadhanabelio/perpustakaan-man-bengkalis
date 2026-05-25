@@ -237,4 +237,30 @@ class BorrowingController extends Controller
 
         return $phone;
     }
+
+    public function approveExtend($id)
+    {
+        $borrowing = Borrowing::with(['book', 'member.user'])
+            ->findOrFail($id);
+
+        if ($borrowing->status != 'extend_requested') {
+            return back()->with('error', 'Tidak ada pengajuan perpanjangan');
+        }
+
+        $newDueDate = \Carbon\Carbon::parse($borrowing->due_date)
+            ->addDays(7);
+
+        $borrowing->update([
+            'due_date' => $newDueDate,
+            'status' => 'approved'
+        ]);
+
+        $this->sendNotification(
+            $borrowing->member->user,
+            'extend',
+            "Perpanjangan buku '{$borrowing->book->title}' disetujui sampai {$newDueDate->format('d-m-Y')}."
+        );
+
+        return back()->with('success', 'Perpanjangan disetujui');
+    }
 }

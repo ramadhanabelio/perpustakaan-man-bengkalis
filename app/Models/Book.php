@@ -13,6 +13,8 @@ class Book extends Model
         'author',
         'published_year',
         'description',
+        'category',
+        'cover_image',
         'stock'
     ];
 

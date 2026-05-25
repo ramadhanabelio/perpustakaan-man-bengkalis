@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('author');
             $table->year('published_year')->nullable();
             $table->text('description')->nullable();
+            $table->string('category')->nullable();
+            $table->string('cover_image')->nullable();
             $table->integer('stock')->default(0);
             $table->timestamps();
         });

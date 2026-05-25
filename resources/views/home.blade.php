@@ -17,8 +17,8 @@
                 <div class="col-md-3 mb-4">
                     <div class="card card-round shadow-sm h-100">
 
-                        <img src="https://fastly.picsum.photos/id/635/300/200.jpg?hmac=bKcEgmgFyBUU1_CyW8UDC1tMbhTgBehUd1gugLGc12I"
-                            class="card-img-top" alt="cover">
+                        <img src="{{ $book->cover_image ? asset('storage/' . $book->cover_image) : asset('img/default.jpg') }}"
+                            class="card-img-top" style="height: 220px; object-fit: cover;">
 
                         <div class="card-body d-flex flex-column">
 

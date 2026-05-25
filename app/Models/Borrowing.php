@@ -34,25 +34,28 @@ class Borrowing extends Model
 
     public function getStatusLabelAttribute()
     {
-        return [
-            'pending' => 'Menunggu Persetujuan',
-            'approved' => 'Sedang Dipinjam',
-            'returned' => 'Sudah Dikembalikan',
+        return match ($this->status) {
+            'pending' => 'Menunggu',
+            'approved' => 'Dipinjam',
+            'returned' => 'Dikembalikan',
             'late' => 'Terlambat',
-            'return_requested' => 'Menunggu Pengembalian',
             'rejected' => 'Ditolak',
-        ][$this->status] ?? $this->status;
+            'return_requested' => 'Pengajuan Pengembalian',
+            'extend_requested' => 'Pengajuan Perpanjangan',
+            default => ucfirst($this->status),
+        };
     }
 
     public function getStatusColorAttribute()
     {
-        return [
-            'pending' => 'warning',
+        return match ($this->status) {
             'approved' => 'success',
             'returned' => 'primary',
             'late' => 'danger',
-            'return_requested' => 'info',
             'rejected' => 'secondary',
-        ][$this->status] ?? 'dark';
+            'return_requested' => 'info',
+            'extend_requested' => 'warning',
+            default => 'warning',
+        };
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Book;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
@@ -27,11 +28,22 @@ class BookController extends Controller
             'author' => 'required',
             'published_year' => 'nullable|digits:4',
             'stock' => 'required|integer|min:0',
+            'category' => 'nullable|string',
+            'cover_image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        Book::create($request->all());
+        $data = $request->all();
 
-        return redirect()->route('books.index')->with('success', 'Buku berhasil ditambahkan');
+        if ($request->hasFile('cover_image')) {
+            $data['cover_image'] = $request->file('cover_image')
+                ->store('books', 'public');
+        }
+
+        Book::create($data);
+
+        return redirect()
+            ->route('books.index')
+            ->with('success', 'Buku berhasil ditambahkan');
     }
 
     public function edit(Book $book)
@@ -47,17 +59,43 @@ class BookController extends Controller
             'author' => 'required',
             'published_year' => 'nullable|digits:4',
             'stock' => 'required|integer|min:0',
+            'category' => 'nullable|string',
+            'cover_image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        $book->update($request->all());
+        $data = $request->all();
 
-        return redirect()->route('books.index')->with('success', 'Buku berhasil diupdate');
+        if ($request->hasFile('cover_image')) {
+
+            if ($book->cover_image && Storage::disk('public')->exists($book->cover_image)) {
+                Storage::disk('public')->delete($book->cover_image);
+            }
+
+            $data['cover_image'] = $request->file('cover_image')
+                ->store('books', 'public');
+        }
+
+        $book->update($data);
+
+        return redirect()
+            ->route('books.index')
+            ->with('success', 'Buku berhasil diupdate');
     }
 
     public function destroy(Book $book)
     {
+        if (
+            $book->cover_image &&
+            Storage::disk('public')->exists($book->cover_image)
+        ) {
+
+            Storage::disk('public')->delete($book->cover_image);
+        }
+
         $book->delete();
 
-        return redirect()->route('books.index')->with('success', 'Buku berhasil dihapus');
+        return redirect()
+            ->route('books.index')
+            ->with('success', 'Buku berhasil dihapus');
     }
 }

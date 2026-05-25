@@ -30,8 +30,10 @@
                     <a class="dropdown-toggle profile-pic" data-bs-toggle="dropdown" href="#"
                         aria-expanded="false">
                         <div class="avatar-sm">
-                            <img src="{{ asset('img/profile.jpg') }}" alt="Default Avatar"
-                                class="avatar-img rounded-circle">
+                            <img src="{{ auth()->user()->profile_picture
+                                ? asset('storage/' . auth()->user()->profile_picture)
+                                : asset('img/profile.jpg') }}"
+                                alt="Profile" class="avatar-img rounded-circle">
                         </div>
                         <span class="profile-username">
                             <span class="fw-bold">{{ Auth::user()->name }}</span>
@@ -41,8 +43,12 @@
                         <div class="dropdown-user-scroll scrollbar-outer">
                             <li>
                                 <div class="user-box">
-                                    <div class="avatar-lg"><img src="{{ asset('img/profile.jpg') }}" alt="image profile"
-                                            class="avatar-img rounded"></div>
+                                    <div class="avatar-lg">
+                                        <img src="{{ auth()->user()->profile_picture
+                                            ? asset('storage/' . auth()->user()->profile_picture)
+                                            : asset('img/profile.jpg') }}"
+                                            alt="image profile" class="avatar-img rounded">
+                                    </div>
                                     <div class="u-text">
                                         <h4>{{ Auth::user()->name }}</h4>
                                         <p class="text-muted">{{ Auth::user()->email }}</p>
@@ -50,6 +56,10 @@
                                 </div>
                             </li>
                             <li>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="{{ route('profile.edit') }}">
+                                    <i class="fas fa-user me-2"></i> Profil Saya
+                                </a>
                                 <div class="dropdown-divider"></div>
                                 <form action="{{ route('logout') }}" method="POST">
                                     @csrf
