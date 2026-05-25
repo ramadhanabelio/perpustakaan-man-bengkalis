@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
         $admin = User::create([
             'name' => 'Admin Perpustakaan',
             'email' => 'perpustakaan@man1bengkalis.sch.id',
-            'phone' => '082170925097',
+            'phone' => '089502337262',
             'role' => 'admin',
             'password' => Hash::make('password'),
         ]);
@@ -39,7 +39,7 @@ class DatabaseSeeder extends Seeder
         $userMember = User::create([
             'name' => 'Nurhidayah',
             'email' => 'nurhidayah@gmail.com',
-            'phone' => '085274253902',
+            'phone' => '081275627187',
             'role' => 'member',
             'password' => Hash::make('password'),
         ]);
