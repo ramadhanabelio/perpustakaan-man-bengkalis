@@ -14,7 +14,11 @@ class Borrowing extends Model
         'book_id',
         'borrow_date',
         'due_date',
-        'status'
+        'status',
+
+        'guest_name',
+        'guest_phone',
+        'guest_nisn',
     ];
 
     public function member()

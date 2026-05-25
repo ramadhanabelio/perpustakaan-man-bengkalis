@@ -34,16 +34,36 @@ class BorrowingController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'member_id' => 'required',
             'book_id' => 'required',
             'borrow_date' => 'required|date',
             'due_date' => 'required|date|after_or_equal:borrow_date',
             'status' => 'required',
         ]);
 
-        Borrowing::create($request->all());
+        // wajib salah satu
+        if (
+            !$request->member_id &&
+            !$request->guest_name
+        ) {
+            return back()->with('error', 'Pilih member atau isi data peminjam manual.');
+        }
 
-        return redirect()->route('borrowings.index')->with('success', 'Data peminjaman berhasil ditambahkan');
+        Borrowing::create([
+            'member_id' => $request->member_id,
+
+            'guest_name' => $request->guest_name,
+            'guest_phone' => $request->guest_phone,
+            'guest_nisn' => $request->guest_nisn,
+
+            'book_id' => $request->book_id,
+            'borrow_date' => $request->borrow_date,
+            'due_date' => $request->due_date,
+            'status' => $request->status,
+        ]);
+
+        return redirect()
+            ->route('borrowings.index')
+            ->with('success', 'Data peminjaman berhasil ditambahkan');
     }
 
     public function edit(Borrowing $borrowing)

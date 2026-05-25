@@ -3,21 +3,6 @@
 @section('title', 'Monitoring Peminjaman')
 
 @section('content')
-    <style>
-        .table-fixed {
-            max-height: 650px;
-            overflow-y: auto;
-        }
-
-        .table-fixed thead th {
-            position: sticky;
-            top: 0;
-            z-index: 10;
-            background: white;
-            border-bottom: 2px solid #dee2e6;
-        }
-    </style>
-
     <div class="page-inner">
 
         <div class="page-header">
@@ -67,7 +52,16 @@
                             @foreach ($borrowings as $i => $b)
                                 <tr>
                                     <td>{{ $i + 1 }}.</td>
-                                    <td>{{ $b->member->user->name }}</td>
+                                    <td>
+                                        @if ($b->member)
+                                            {{ $b->member->user->name }}
+                                        @else
+                                            <div>
+                                                <strong>{{ $b->guest_name }}</strong><br>
+                                                <small>{{ $b->guest_nisn }}</small>
+                                            </div>
+                                        @endif
+                                    </td>
                                     <td>{{ $b->book->title }}</td>
                                     <td>{{ $b->borrow_date }}</td>
                                     <td>{{ $b->due_date }}</td>

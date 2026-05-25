@@ -18,7 +18,7 @@
 
                     <div class="form-group">
                         <label>Member</label>
-                        <select name="member_id" class="form-control">
+                        <select name="member_id" class="form-select">
                             @foreach ($members as $m)
                                 <option value="{{ $m->id }}" {{ $borrowing->member_id == $m->id ? 'selected' : '' }}>
                                     {{ $m->user->name }}
@@ -29,7 +29,7 @@
 
                     <div class="form-group">
                         <label>Buku</label>
-                        <select name="book_id" class="form-control">
+                        <select name="book_id" class="form-select">
                             @foreach ($books as $b)
                                 <option value="{{ $b->id }}" {{ $borrowing->book_id == $b->id ? 'selected' : '' }}>
                                     {{ $b->title }}
@@ -40,18 +40,21 @@
 
                     <div class="form-group">
                         <label>Tanggal Pinjam</label>
-                        <input type="date" name="borrow_date" value="{{ $borrowing->borrow_date }}" class="form-control">
+                        <input type="date" value="{{ $borrowing->borrow_date }}" class="form-control" disabled>
+                        <input type="hidden" name="borrow_date" value="{{ $borrowing->borrow_date }}">
                     </div>
 
                     <div class="form-group">
                         <label>Jatuh Tempo</label>
-                        <input type="date" name="due_date" value="{{ $borrowing->due_date }}" class="form-control">
+                        <input type="date" value="{{ $borrowing->due_date }}" class="form-control" disabled>
+                        <input type="hidden" name="due_date" value="{{ $borrowing->due_date }}">
                     </div>
 
                     <div class="form-group">
                         <label>Status</label>
-                        <select name="status" class="form-control">
-                            <option value="pending" {{ $borrowing->status == 'pending' ? 'selected' : '' }}>Pending</option>
+                        <select name="status" class="form-select">
+                            <option value="pending" {{ $borrowing->status == 'pending' ? 'selected' : '' }}>Pending
+                            </option>
                             <option value="approved" {{ $borrowing->status == 'approved' ? 'selected' : '' }}>Disetujui
                             </option>
                             <option value="return_requested"

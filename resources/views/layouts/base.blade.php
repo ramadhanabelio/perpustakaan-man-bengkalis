@@ -34,6 +34,21 @@
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/plugins.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/kaiadmin.min.css') }}">
+
+    <style>
+        .table-fixed {
+            max-height: 650px;
+            overflow-y: auto;
+        }
+
+        .table-fixed thead th {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: white;
+            border-bottom: 2px solid #dee2e6;
+        }
+    </style>
 </head>
 
 <body>
