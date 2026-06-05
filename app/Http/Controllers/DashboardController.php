@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Models\Book;
-use App\Models\Borrowing;
-use App\Models\Member;
 use Carbon\Carbon;
+use App\Models\Book;
+use App\Models\User;
+use App\Models\Member;
+use App\Models\Borrowing;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
 class DashboardController extends Controller
 {
@@ -15,7 +16,11 @@ class DashboardController extends Controller
     {
         $totalBooks = Book::count();
         $totalMembers = Member::count();
-        $totalBorrowed = Borrowing::whereIn('status', ['approved', 'late', 'return_requested'])->count();
+        $totalBorrowed = Borrowing::whereIn('status', [
+            'approved',
+            'late',
+            'return_requested'
+        ])->count();
 
         $weekly = Borrowing::select(
             DB::raw('DATE(borrow_date) as date'),
@@ -35,12 +40,28 @@ class DashboardController extends Controller
             ->orderBy('month')
             ->get();
 
+        $bookStatus = [
+            'Tersedia' => Book::sum('stock'),
+            'Dipinjam' => Borrowing::whereIn('status', [
+                'approved',
+                'late',
+                'return_requested'
+            ])->count(),
+        ];
+
+        $userStats = [
+            'Admin' => User::where('role', 'admin')->count(),
+            'Anggota' => User::where('role', 'member')->count(),
+        ];
+
         return view('dashboard', compact(
             'totalBooks',
             'totalMembers',
             'totalBorrowed',
             'weekly',
-            'yearly'
+            'yearly',
+            'bookStatus',
+            'userStats'
         ));
     }
 }

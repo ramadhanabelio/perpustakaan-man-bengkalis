@@ -34,19 +34,23 @@
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/plugins.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/kaiadmin.min.css') }}">
-
     <style>
-        .table-fixed {
-            max-height: 650px;
-            overflow-y: auto;
-        }
-
-        .table-fixed thead th {
+        /* Header DataTable tetap */
+        .dataTables_scrollHead {
             position: sticky;
             top: 0;
-            z-index: 10;
+            z-index: 1000;
             background: white;
-            border-bottom: 2px solid #dee2e6;
+        }
+
+        /* Card body tidak ikut scroll */
+        .card-body {
+            overflow: hidden;
+        }
+
+        /* Rapikan */
+        .dataTables_scrollBody {
+            border-bottom: 1px solid #dee2e6;
         }
     </style>
 </head>

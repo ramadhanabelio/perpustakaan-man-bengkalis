@@ -35,7 +35,7 @@
                     <div class="alert alert-success">{{ session('success') }}</div>
                 @endif
 
-                <div class="table-responsive table-fixed">
+                <div class="table-responsive">
                     <table id="basic-datatables" class="display table table-striped table-hover">
                         <thead>
                             <tr>
@@ -85,51 +85,50 @@
                                             </form>
 
                                             {{-- APPROVE --}}
-                                            @if ($b->status == 'pending')
-                                                <form action="{{ route('borrowings.approve', $b->id) }}" method="POST">
-                                                    @csrf
-                                                    <button class="btn btn-success btn-sm">Setujui</button>
-                                                </form>
+                                            {{-- @if ($b->status == 'pending') --}}
+                                            <form action="{{ route('borrowings.approve', $b->id) }}" method="POST">
+                                                @csrf
+                                                <button class="btn btn-success btn-sm">Setujui</button>
+                                            </form>
 
-                                                <form action="{{ route('borrowings.reject', $b->id) }}" method="POST">
-                                                    @csrf
-                                                    <button class="btn btn-secondary btn-sm">Tolak</button>
-                                                </form>
-                                            @endif
+                                            <form action="{{ route('borrowings.reject', $b->id) }}" method="POST">
+                                                @csrf
+                                                <button class="btn btn-danger btn-sm">Tolak</button>
+                                            </form>
+                                            {{-- @endif --}}
 
                                             {{-- RETURN LANGSUNG --}}
-                                            @if ($b->status == 'approved')
-                                                <form action="{{ route('borrowings.return', $b->id) }}" method="POST">
-                                                    @csrf
-                                                    <button class="btn btn-primary btn-sm">Dikembalikan</button>
-                                                </form>
-                                            @endif
+                                            {{-- @if ($b->status == 'approved') --}}
+                                            <form action="{{ route('borrowings.return', $b->id) }}" method="POST">
+                                                @csrf
+                                                <button class="btn btn-primary btn-sm">Dikembalikan</button>
+                                            </form>
+                                            {{-- @endif --}}
 
                                             {{-- APPROVAL RETURN --}}
-                                            @if ($b->status == 'return_requested')
-                                                <form action="{{ route('borrowings.return', $b->id) }}" method="POST">
-                                                    @csrf
-                                                    <button class="btn btn-success btn-sm">Approve Return</button>
-                                                </form>
+                                            {{-- @if ($b->status == 'return_requested') --}}
+                                            <form action="{{ route('borrowings.return', $b->id) }}" method="POST">
+                                                @csrf
+                                                <button class="btn btn-success btn-sm">Setujui Pengembalian</button>
+                                            </form>
 
-                                                <form action="{{ route('borrowings.rejectReturn', $b->id) }}"
-                                                    method="POST">
-                                                    @csrf
-                                                    <button class="btn btn-danger btn-sm">Tolak Return</button>
-                                                </form>
-                                            @endif
+                                            <form action="{{ route('borrowings.rejectReturn', $b->id) }}" method="POST">
+                                                @csrf
+                                                <button class="btn btn-danger btn-sm">Tolak Pengembalian</button>
+                                            </form>
+                                            {{-- @endif --}}
 
-                                            @if ($b->status == 'extend_requested')
-                                                <form action="{{ route('borrowings.approveExtend', $b->id) }}"
-                                                    method="POST" style="display:inline;">
+                                            {{-- @if ($b->status == 'extend_requested') --}}
+                                            <form action="{{ route('borrowings.approveExtend', $b->id) }}" method="POST"
+                                                style="display:inline;">
 
-                                                    @csrf
+                                                @csrf
 
-                                                    <button class="btn btn-warning btn-sm">
-                                                        Setujui Perpanjangan
-                                                    </button>
-                                                </form>
-                                            @endif
+                                                <button class="btn btn-warning btn-sm">
+                                                    Setujui Perpanjangan
+                                                </button>
+                                            </form>
+                                            {{-- @endif --}}
 
                                         </div>
 
