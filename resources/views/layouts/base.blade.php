@@ -35,7 +35,6 @@
     <link rel="stylesheet" href="{{ asset('css/plugins.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/kaiadmin.min.css') }}">
     <style>
-        /* Header DataTable tetap */
         .dataTables_scrollHead {
             position: sticky;
             top: 0;
@@ -43,12 +42,10 @@
             background: white;
         }
 
-        /* Card body tidak ikut scroll */
         .card-body {
             overflow: hidden;
         }
 
-        /* Rapikan */
         .dataTables_scrollBody {
             border-bottom: 1px solid #dee2e6;
         }
