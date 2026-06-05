@@ -4,8 +4,17 @@
         <!-- Logo Header -->
         <div class="logo-header justify-content-center" data-background-color="light">
 
-            <a href="{{ route('dashboard') }}" class="logo">
-                <img src="{{ asset('img/brand.png') }}" alt="navbar brand" class="navbar-brand" height="30">
+            <a href="{{ route('dashboard') }}" class="logo d-flex align-items-center text-decoration-none">
+                <img src="{{ asset('img/logo.png') }}" alt="Logo MAN 1 Bengkalis" height="55" class="me-2">
+
+                <div class="logo-text">
+                    <div class="fw-bold fs-5 mt-2 text-dark">
+                        MAN 1 Bengkalis
+                    </div>
+                    <small class="text-muted">
+                        Perpustakaan Online
+                    </small>
+                </div>
             </a>
             <div class="nav-toggle">
                 <button class="btn btn-toggle toggle-sidebar">

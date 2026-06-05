@@ -52,6 +52,18 @@
         .dataTables_scrollBody {
             border-bottom: 1px solid #dee2e6;
         }
+
+        .logo {
+            gap: 10px;
+        }
+
+        .logo-text {
+            line-height: 1.1;
+        }
+
+        .logo-text .fw-bold {
+            letter-spacing: .3px;
+        }
     </style>
 </head>
 
