@@ -40,12 +40,17 @@ class Borrowing extends Model
     {
         return match ($this->status) {
             'pending' => 'Menunggu',
-            'approved' => 'Dipinjam',
+            'approved' => 'Sedang Dipinjam',
             'returned' => 'Dikembalikan',
             'late' => 'Terlambat',
             'rejected' => 'Ditolak',
+
             'return_requested' => 'Pengajuan Pengembalian',
+
             'extend_requested' => 'Pengajuan Perpanjangan',
+            'extend_approved' => 'Perpanjangan Disetujui',
+            'extend_rejected' => 'Perpanjangan Ditolak',
+
             default => ucfirst($this->status),
         };
     }
@@ -53,13 +58,24 @@ class Borrowing extends Model
     public function getStatusColorAttribute()
     {
         return match ($this->status) {
+
             'approved' => 'success',
+
             'returned' => 'primary',
+
             'late' => 'danger',
+
             'rejected' => 'secondary',
+
             'return_requested' => 'info',
+
             'extend_requested' => 'warning',
-            default => 'warning',
+
+            'extend_approved' => 'success',
+
+            'extend_rejected' => 'danger',
+
+            default => 'secondary',
         };
     }
 }

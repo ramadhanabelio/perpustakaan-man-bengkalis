@@ -51,5 +51,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/borrowings/{id}/return', [BorrowingController::class, 'returnBook'])->name('borrowings.return');
     Route::post('/borrowings/{id}/reject-return', [BorrowingController::class, 'rejectReturn'])->name('borrowings.rejectReturn');
     Route::post('/borrowings/{id}/reject', [BorrowingController::class, 'reject'])->name('borrowings.reject');
+    Route::post('/borrowings/{id}/reject-extend', [BorrowingController::class, 'rejectExtend'])->name('borrowings.rejectExtend');
     Route::resource('borrowings', BorrowingController::class);
 });

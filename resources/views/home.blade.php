@@ -12,10 +12,32 @@
             </div>
         </div>
 
+        {{-- <div class="row mb-3">
+            <div class="col-md-12">
+                <div class="alert alert-primary">
+                    <i class="fas fa-book me-2"></i>
+                    Tersedia <strong>{{ $books->count() }}</strong> buku di perpustakaan.
+                </div>
+            </div>
+        </div> --}}
+
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text">
+                        <i class="fas fa-search"></i>
+                    </span>
+                    <input type="text" id="searchBook" class="form-control"
+                        placeholder="Cari judul buku, penulis, atau kategori...">
+                </div>
+            </div>
+        </div>
+
         <div class="row">
             @foreach ($books as $book)
-                <div class="col-md-3 mb-4">
-                    <div class="card card-round shadow-sm h-100">
+                <div class="col-md-3 mb-4 book-item">
+                    <div class="card card-round shadow-sm h-100" data-title="{{ strtolower($book->title) }}"
+                        data-author="{{ strtolower($book->author) }}" data-category="{{ strtolower($book->category) }}">
 
                         <img src="{{ $book->cover_image ? asset('storage/' . $book->cover_image) : asset('img/default.jpg') }}"
                             class="card-img-top" style="height: 220px; object-fit: cover;">
@@ -54,3 +76,33 @@
 
     </div>
 @endsection
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+        const searchInput = document.getElementById('searchBook');
+
+        searchInput.addEventListener('keyup', function() {
+
+            let keyword = this.value.toLowerCase();
+
+            document.querySelectorAll('.book-item').forEach(item => {
+
+                let card = item.querySelector('.card');
+
+                let title = card.dataset.title || '';
+                let author = card.dataset.author || '';
+                let category = card.dataset.category || '';
+
+                let found =
+                    title.includes(keyword) ||
+                    author.includes(keyword) ||
+                    category.includes(keyword);
+
+                item.style.display = found ? '' : 'none';
+            });
+
+        });
+
+    });
+</script>

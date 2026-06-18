@@ -40,7 +40,6 @@ class BorrowingController extends Controller
             'status' => 'required',
         ]);
 
-        // wajib salah satu
         if (
             !$request->member_id &&
             !$request->guest_name
@@ -129,7 +128,6 @@ class BorrowingController extends Controller
     {
         $borrowing = Borrowing::with(['book', 'member.user', 'returnData'])->findOrFail($id);
 
-        // hanya bisa kalau member sudah request
         if ($borrowing->status !== 'return_requested') {
             return back()->with('error', 'Belum ada pengajuan pengembalian');
         }
@@ -214,6 +212,28 @@ class BorrowingController extends Controller
         );
 
         return back()->with('success', 'Peminjaman ditolak');
+    }
+
+    public function rejectExtend($id)
+    {
+        $borrowing = Borrowing::with(['book', 'member.user'])
+            ->findOrFail($id);
+
+        if ($borrowing->status != 'extend_requested') {
+            return back()->with('error', 'Tidak ada pengajuan perpanjangan');
+        }
+
+        $borrowing->update([
+            'status' => 'extend_rejected'
+        ]);
+
+        $this->sendNotification(
+            $borrowing->member->user,
+            'extend_rejected',
+            "Pengajuan perpanjangan buku '{$borrowing->book->title}' ditolak."
+        );
+
+        return back()->with('success', 'Perpanjangan ditolak');
     }
 
     private function sendNotification($user, $type, $message)
