@@ -52,5 +52,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/borrowings/{id}/reject-return', [BorrowingController::class, 'rejectReturn'])->name('borrowings.rejectReturn');
     Route::post('/borrowings/{id}/reject', [BorrowingController::class, 'reject'])->name('borrowings.reject');
     Route::post('/borrowings/{id}/reject-extend', [BorrowingController::class, 'rejectExtend'])->name('borrowings.rejectExtend');
+    Route::get('/borrowings/export/pdf', [BorrowingController::class, 'exportPdf'])
+        ->name('borrowings.export.pdf');
+    Route::get('/borrowings/export/excel', [BorrowingController::class, 'exportExcel'])
+        ->name('borrowings.export.excel');
     Route::resource('borrowings', BorrowingController::class);
 });

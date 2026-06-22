@@ -8,6 +8,9 @@ use App\Models\Borrowing;
 use App\Models\Member;
 use App\Models\Notification;
 use Carbon\Carbon;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\BorrowingExport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -302,5 +305,40 @@ class BorrowingController extends Controller
         );
 
         return back()->with('success', 'Perpanjangan disetujui');
+    }
+
+    public function exportPdf(Request $request)
+    {
+        $query = Borrowing::with(['member.user', 'book']);
+
+        if ($request->month) {
+            $query->whereMonth('borrow_date', $request->month);
+        }
+
+        if ($request->year) {
+            $query->whereYear('borrow_date', $request->year);
+        }
+
+        $borrowings = $query->get();
+
+        $pdf = Pdf::loadView(
+            'borrowings.pdf',
+            compact('borrowings')
+        );
+
+        return $pdf->download(
+            'laporan-peminjaman.pdf'
+        );
+    }
+
+    public function exportExcel(Request $request)
+    {
+        return Excel::download(
+            new BorrowingExport(
+                $request->month,
+                $request->year
+            ),
+            'laporan-peminjaman.xlsx'
+        );
     }
 }

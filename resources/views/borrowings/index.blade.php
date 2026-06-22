@@ -25,8 +25,42 @@
         </div>
 
         <div class="card card-round">
-            <div class="card-header">
-                <div class="card-title">Data Peminjaman</div>
+            <div class="card-header d-flex justify-content-between align-items-center flex-wrap gap-3">
+
+                <div class="card-title mb-0">
+                    Data Peminjaman
+                </div>
+
+                <form class="d-flex align-items-center gap-2 flex-wrap">
+
+                    <select name="month" class="form-select form-select-sm" style="width: 140px;">
+                        <option value="">Semua Bulan</option>
+                        @for ($i = 1; $i <= 12; $i++)
+                            <option value="{{ $i }}">
+                                {{ date('F', mktime(0, 0, 0, $i, 1)) }}
+                            </option>
+                        @endfor
+                    </select>
+
+                    <select name="year" class="form-select form-select-sm" style="width: 100px;">
+                        @for ($y = date('Y'); $y >= 2020; $y--)
+                            <option value="{{ $y }}">
+                                {{ $y }}
+                            </option>
+                        @endfor
+                    </select>
+
+                    <button type="submit" formaction="{{ route('borrowings.export.pdf') }}" class="btn btn-danger btn-sm">
+                        <i class="fas fa-file-pdf me-1"></i> PDF
+                    </button>
+
+                    <button type="submit" formaction="{{ route('borrowings.export.excel') }}"
+                        class="btn btn-success btn-sm">
+                        <i class="fas fa-file-excel me-1"></i> Excel
+                    </button>
+
+                </form>
+
             </div>
 
             <div class="card-body">
@@ -42,7 +76,7 @@
                                 <th>No.</th>
                                 <th>Member</th>
                                 <th>Buku</th>
-                                <th>Tgl Pinjam</th>
+                                <th>Tanggal Pinjam</th>
                                 <th>Jatuh Tempo</th>
                                 <th>Status</th>
                                 <th width="220">Aksi</th>
@@ -76,7 +110,7 @@
 
                                             @if ($b->status == 'returned')
                                                 <a href="{{ route('borrowings.edit', $b->id) }}"
-                                                    class="btn btn-warning btn-sm">Edit</a>
+                                                    class="btn btn-warning btn-sm me-2">Edit</a>
 
                                                 <form action="{{ route('borrowings.destroy', $b->id) }}" method="POST">
                                                     @csrf
