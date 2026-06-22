@@ -65,7 +65,7 @@
                                             <td>
                                                 <div class="form-button-action">
                                                     <a href="{{ route('books.edit', $book->id) }}"
-                                                        class="btn btn-warning btn-sm">Edit</a>
+                                                        class="btn btn-warning btn-sm me-2">Edit</a>
 
                                                     <form action="{{ route('books.destroy', $book->id) }}" method="POST"
                                                         style="display:inline-block;">

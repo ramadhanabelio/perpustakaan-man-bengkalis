@@ -69,7 +69,7 @@
                                                 <div class="form-button-action">
 
                                                     <a href="{{ route('members.edit', $m->id) }}"
-                                                        class="btn btn-warning btn-sm">
+                                                        class="btn btn-warning btn-sm me-2">
                                                         Edit
                                                     </a>
 
