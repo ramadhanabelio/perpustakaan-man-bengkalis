@@ -120,6 +120,18 @@
                                                 </form>
                                             @endif
 
+                                            @if ($b->status == 'rejected')
+                                                <a href="{{ route('borrowings.edit', $b->id) }}"
+                                                    class="btn btn-warning btn-sm me-2">Edit</a>
+
+                                                <form action="{{ route('borrowings.destroy', $b->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button class="btn btn-danger btn-sm"
+                                                        onclick="return confirm('Hapus data?')">Hapus</button>
+                                                </form>
+                                            @endif
+
                                             {{-- APPROVE --}}
                                             @if ($b->status == 'pending')
                                                 <form action="{{ route('borrowings.approve', $b->id) }}" method="POST">

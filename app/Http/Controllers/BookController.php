@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Book;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\BookExport;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 
@@ -97,5 +100,31 @@ class BookController extends Controller
         return redirect()
             ->route('books.index')
             ->with('success', 'Buku berhasil dihapus');
+    }
+
+    public function exportPdf(Request $request)
+    {
+        $query = Book::query();
+
+        if ($request->year) {
+            $query->whereYear('created_at', $request->year);
+        }
+
+        $books = $query->latest()->get();
+
+        $pdf = Pdf::loadView(
+            'books.pdf',
+            compact('books')
+        );
+
+        return $pdf->download('laporan-buku.pdf');
+    }
+
+    public function exportExcel(Request $request)
+    {
+        return Excel::download(
+            new BookExport($request->year),
+            'laporan-buku.xlsx'
+        );
     }
 }

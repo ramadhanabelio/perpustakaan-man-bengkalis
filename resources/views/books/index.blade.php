@@ -35,8 +35,40 @@
                 @endif
 
                 <div class="card card-round">
-                    <div class="card-header">
-                        <div class="card-title">Kelola Buku</div>
+                    <div class="card-header d-flex justify-content-between align-items-center flex-wrap gap-3">
+
+                        <div class="card-title mb-0">
+                            Kelola Buku
+                        </div>
+
+                        <form class="d-flex align-items-center gap-2 flex-wrap">
+
+                            <select name="year" class="form-select form-select-sm" style="width: 120px;">
+                                <option value="">Semua Tahun</option>
+
+                                @for ($y = date('Y'); $y >= 2020; $y--)
+                                    <option value="{{ $y }}">
+                                        {{ $y }}
+                                    </option>
+                                @endfor
+                            </select>
+
+                            <button type="submit" formaction="{{ route('books.export.pdf') }}"
+                                class="btn btn-danger btn-sm">
+
+                                <i class="fas fa-file-pdf me-1"></i>
+                                PDF
+                            </button>
+
+                            <button type="submit" formaction="{{ route('books.export.excel') }}"
+                                class="btn btn-success btn-sm">
+
+                                <i class="fas fa-file-excel me-1"></i>
+                                Excel
+                            </button>
+
+                        </form>
+
                     </div>
 
                     <div class="card-body">

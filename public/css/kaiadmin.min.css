@@ -429,7 +429,7 @@ body {
     border: 1px solid #eaeaea;
 }
 .main-header {
-    background: #fff;
+    background: #3f8f48;
     min-height: 60px;
     width: calc(100% - 250px);
     position: fixed;

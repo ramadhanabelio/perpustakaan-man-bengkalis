@@ -44,7 +44,15 @@ Route::middleware('auth')->group(function () {
     Route::put('/profile', [ProfileController::class, 'update'])
         ->name('profile.update');
 
+    Route::get('/books/export/pdf', [BookController::class, 'exportPdf'])
+        ->name('books.export.pdf');
+    Route::get('/books/export/excel', [BookController::class, 'exportExcel'])
+        ->name('books.export.excel');
     Route::resource('books', BookController::class);
+    Route::get('/members/export/pdf', [MemberController::class, 'exportPdf'])
+        ->name('members.export.pdf');
+    Route::get('/members/export/excel', [MemberController::class, 'exportExcel'])
+        ->name('members.export.excel');
     Route::resource('members', MemberController::class);
     Route::resource('admins', AdminController::class);
     Route::post('/borrowings/{id}/approve', [BorrowingController::class, 'approve'])->name('borrowings.approve');

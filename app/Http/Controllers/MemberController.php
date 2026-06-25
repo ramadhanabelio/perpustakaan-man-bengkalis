@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Member;
 use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\MemberExport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -91,5 +94,33 @@ class MemberController extends Controller
         $member->delete();
 
         return redirect()->route('members.index')->with('success', 'Member berhasil dihapus');
+    }
+
+    public function exportPdf(Request $request)
+    {
+        $query = Member::with('user');
+
+        if ($request->class) {
+            $query->where('class', 'LIKE', $request->class . '%');
+        }
+
+        $members = $query->latest()->get();
+
+        $pdf = Pdf::loadView(
+            'members.pdf',
+            compact('members')
+        );
+
+        return $pdf->download(
+            'laporan-member.pdf'
+        );
+    }
+
+    public function exportExcel(Request $request)
+    {
+        return Excel::download(
+            new MemberExport($request->class),
+            'laporan-member.xlsx'
+        );
     }
 }

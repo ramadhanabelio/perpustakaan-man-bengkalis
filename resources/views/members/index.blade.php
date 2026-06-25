@@ -37,8 +37,37 @@
                 @endif
 
                 <div class="card card-round">
-                    <div class="card-header">
-                        <div class="card-title">Kelola Member</div>
+                    <div class="card-header d-flex justify-content-between align-items-center flex-wrap gap-3">
+
+                        <div class="card-title mb-0">
+                            Kelola Member
+                        </div>
+
+                        <form class="d-flex align-items-center gap-2 flex-wrap">
+
+                            <select name="class" class="form-select form-select-sm" style="width:150px;">
+                                <option value="">Semua Kelas</option>
+                                <option value="X">Kelas X</option>
+                                <option value="XI">Kelas XI</option>
+                                <option value="XII">Kelas XII</option>
+                            </select>
+
+                            <button type="submit" formaction="{{ route('members.export.pdf') }}"
+                                class="btn btn-danger btn-sm">
+
+                                <i class="fas fa-file-pdf me-1"></i>
+                                PDF
+                            </button>
+
+                            <button type="submit" formaction="{{ route('members.export.excel') }}"
+                                class="btn btn-success btn-sm">
+
+                                <i class="fas fa-file-excel me-1"></i>
+                                Excel
+                            </button>
+
+                        </form>
+
                     </div>
 
                     <div class="card-body">
