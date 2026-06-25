@@ -70,7 +70,7 @@
                                             <td>
 
                                                 <a href="{{ route('admins.edit', $admin->id) }}"
-                                                    class="btn btn-warning btn-sm me-2">
+                                                    class="btn btn-warning btn-sm me-2 mb-2">
                                                     Edit
                                                 </a>
 
